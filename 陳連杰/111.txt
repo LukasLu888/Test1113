@@ -1,0 +1,28 @@
+echo off
+echo Start > D:\status.txt
+copy nul D:\aaa /Y
+matlab -nodesktop -r "run('D:\108_3_frame_Echange\1080929_Noise_sigma_bat_r_100HZ\cuckoo_search_check_rs.m');quit;"
+:repl
+if exist "D:\aaa" (
+timeout 3 > nul
+goto repl
+)
+
+set /A COUNTER=1
+copy nul D:\bbb /Y
+:loop
+copy nul D:\aaa /Y
+echo [ %COUNTER% ]
+echo [ %COUNTER% ] >> D:\status.txt
+matlab -nodesktop -r "run('D:\108_3_frame_Echange\1080929_Noise_sigma_bat_r_100HZ\cuckoo_search_check_bat.m');quit;"
+:repA
+if exist "D:\aaa" (
+timeout 3 > nul
+goto repA
+)
+set /A COUNTER=COUNTER+1
+if exist "D:\bbb" (
+timeout 3 > nul
+goto loop
+)
+stop
